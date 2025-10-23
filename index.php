@@ -1,0 +1,189 @@
+<?php
+$baseDir = __DIR__;
+$clientes = glob($baseDir . '/cliente_*', GLOB_ONLYDIR);
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Provador Virtual - Resultados</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
+                        url('https://www.transparenttextures.com/patterns/fabric-of-squares.png');
+            background-color: #f8f9fa;
+            background-repeat: repeat;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            padding: 40px 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #search {
+            width: 320px;
+            max-width: 90%;
+            padding: 12px 18px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        #search:focus {
+            border-color: #c2185b;
+            box-shadow: 0 0 8px rgba(194,24,91,0.3);
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        .card {
+            display: none; /* 🔒 Ocultas até pesquisar */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease-in-out;
+            width: 220px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+
+        .card.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #111;
+        }
+
+        .btn-custom {
+            background-color: #c2185b;
+            color: #fff;
+            border-radius: 25px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #a3154d;
+            transform: scale(1.05);
+        }
+
+        .not-found {
+            text-align: center;
+            color: #999;
+            margin-top: 40px;
+            display: none;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #c2185b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>👗 Provador Virtual - Resultados</h1>
+
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Digite o número do cliente...">
+        </div>
+
+        <div class="grid" id="clientes">
+            <?php
+            if (!empty($clientes)) {
+                foreach ($clientes as $dir) {
+                    $cliente = basename($dir);
+                    $num = preg_replace('/[^0-9]/', '', $cliente);
+                    $path = "$cliente/visualizar_$num.html";
+                    if (file_exists(__DIR__ . "/$path")) {
+                        echo "
+                        <div class='card' data-num='$num'>
+                            <div class='card-body text-center'>
+                                <h5 class='card-title'>Cliente $num</h5>
+                                <a href='$path' target='_blank' class='btn btn-custom'>Abrir resultado</a>
+                            </div>
+                        </div>";
+                    }
+                }
+            }
+            ?>
+        </div>
+
+        <p id="noResults" class="not-found">Nenhum cliente encontrado.</p>
+
+        <footer>
+            © <?= date('Y') ?> - <a href="#">Provador Virtual</a> | Desenvolvido com 💖 e Bootstrap
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const searchInput = document.getElementById('search');
+        const cards = document.querySelectorAll('.card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', () => {
+            const term = searchInput.value.trim().toLowerCase();
+            let anyVisible = false;
+
+            cards.forEach(card => {
+                const num = card.getAttribute('data-num');
+                if (num.includes(term) && term !== '') {
+                    card.classList.add('show');
+                    anyVisible = true;
+                } else {
+                    card.classList.remove('show');
+                }
+            });
+
+            noResults.style.display = (term !== '' && !anyVisible) ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>
