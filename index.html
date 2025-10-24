@@ -7,25 +7,33 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+  <!-- Fonte Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
+    /* 🌸 Fundo com textura fashion */
     body {
-      background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
+      background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
                   url('https://www.transparenttextures.com/patterns/fabric-of-squares.png');
-      background-color: #f8f9fa;
+      background-color: #fdfdfd;
       background-repeat: repeat;
+      background-attachment: fixed;
       font-family: 'Poppins', sans-serif;
       color: #333;
       padding: 40px 0;
+      transition: all 0.3s ease-in-out;
     }
 
     h1 {
       text-align: center;
       font-weight: 700;
-      color: #222;
-      margin-bottom: 30px;
+      color: #c2185b;
+      margin-bottom: 40px;
       letter-spacing: 1px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
+    /* 🔍 Caixa de busca */
     .search-box {
       text-align: center;
       margin-bottom: 40px;
@@ -40,6 +48,8 @@
       outline: none;
       transition: all 0.3s;
       font-size: 16px;
+      background-color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
     #search:focus {
@@ -47,6 +57,7 @@
       box-shadow: 0 0 8px rgba(194,24,91,0.3);
     }
 
+    /* 💼 Grid dos clientes */
     .grid {
       display: flex;
       flex-wrap: wrap;
@@ -55,8 +66,9 @@
       padding: 0 20px;
     }
 
+    /* Ocultas até pesquisar */
     .card {
-      display: none; /* Ocultas até pesquisar */
+      display: none;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.4s ease-in-out;
@@ -80,6 +92,8 @@
     .card-title {
       font-weight: 600;
       color: #111;
+      font-size: 18px;
+      margin-bottom: 15px;
     }
 
     .btn-custom {
@@ -88,6 +102,8 @@
       border-radius: 25px;
       border: none;
       transition: all 0.3s;
+      font-weight: 500;
+      padding: 10px 20px;
     }
 
     .btn-custom:hover {
@@ -113,6 +129,7 @@
     footer a {
       color: #c2185b;
       text-decoration: none;
+      font-weight: 500;
     }
 
     footer a:hover {
@@ -144,20 +161,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // 🔧 LISTA DE CLIENTES VÁLIDOS (ATUALIZE ESTA LISTA QUANDO ADICIONAR NOVOS CLIENTES)
-    const clientesValidos = [
-      100,
-      101,
-      102,
-      105,
-      110
-      // 👉 Adicione aqui os números dos clientes que têm `visualizar_X.html`
-    ];
+    // 📋 Lista de clientes válidos
+    const clientesValidos = [100, 101, 102, 105, 110];
 
-    // Preenche o ano automaticamente
+    // Atualiza o ano
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Gera os cards
+    // Gera os cards dinamicamente
     const grid = document.getElementById('clientes');
     let html = '';
 
@@ -175,7 +185,7 @@
 
     grid.innerHTML = html;
 
-    // Funcionalidade de busca
+    // 🔎 Função de busca
     const searchInput = document.getElementById('search');
     const cards = document.querySelectorAll('.card');
     const noResults = document.getElementById('noResults');
