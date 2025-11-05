@@ -1,0 +1,27 @@
+response:
+GenerateContentResponse(
+    done=True,
+    iterator=None,
+    result=protos.GenerateContentResponse({
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "text": "Aqui est\u00e1 a imagem ultra-realista da pessoa vestindo a roupa fornecida, com fundo branco puro e ilumina\u00e7\u00e3o de est\u00fadio:\n\n"
+              }
+            ],
+            "role": "model"
+          },
+          "finish_reason": "STOP",
+          "index": 0
+        }
+      ],
+      "usage_metadata": {
+        "prompt_token_count": 2794,
+        "candidates_token_count": 29,
+        "total_token_count": 2823
+      },
+      "model_version": "gemini-2.5-flash-image-preview"
+    }),
+)
