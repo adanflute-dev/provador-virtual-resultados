@@ -4,14 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Provador Virtual - Resultados</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- Fonte Poppins -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* 🌸 Fundo com textura fashion */
     body {
       background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
                   url('https://www.transparenttextures.com/patterns/fabric-of-squares.png');
@@ -21,7 +18,6 @@
       font-family: 'Poppins', sans-serif;
       color: #333;
       padding: 40px 0;
-      transition: all 0.3s ease-in-out;
     }
 
     h1 {
@@ -33,7 +29,6 @@
       text-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
-    /* 🔍 Caixa de busca */
     .search-box {
       text-align: center;
       margin-bottom: 40px;
@@ -57,7 +52,6 @@
       box-shadow: 0 0 8px rgba(194,24,91,0.3);
     }
 
-    /* 💼 Grid dos clientes */
     .grid {
       display: flex;
       flex-wrap: wrap;
@@ -66,7 +60,6 @@
       padding: 0 20px;
     }
 
-    /* Ocultas até pesquisar */
     .card {
       display: none;
       opacity: 0;
@@ -85,15 +78,13 @@
       transform: translateY(0);
     }
 
-    .card-body {
-      padding: 20px;
-    }
+    .card-body { padding: 20px; }
 
     .card-title {
       font-weight: 600;
-      color: #111;
       font-size: 18px;
       margin-bottom: 15px;
+      color: #111;
     }
 
     .btn-custom {
@@ -132,10 +123,9 @@
       font-weight: 500;
     }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a:hover { text-decoration: underline; }
   </style>
+
 </head>
 <body>
 
@@ -146,66 +136,62 @@
       <input type="text" id="search" placeholder="Digite o número do cliente...">
     </div>
 
-    <div class="grid" id="clientes">
-      <!-- Os cards serão inseridos aqui pelo JavaScript -->
-    </div>
-
+    <div class="grid" id="clientes"></div>
     <p id="noResults" class="not-found">Nenhum cliente encontrado.</p>
 
     <footer>
-      © <span id="currentYear"></span> - <a href="#">Provador Virtual</a> | Desenvolvido com 💖 e Bootstrap
+      © <span id="currentYear"></span> - <a href="#">Provador Virtual</a>
     </footer>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
-    // 📋 Lista de clientes válidos
-    const clientesValidos = [100, 101, 102, 105, 110];
-
-    // Atualiza o ano
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Gera os cards dinamicamente
-    const grid = document.getElementById('clientes');
-    let html = '';
+    async function carregarClientes() {
+      const grid = document.getElementById('clientes');
+      const noResults = document.getElementById('noResults');
 
-    clientesValidos.forEach(num => {
-      const path = `cliente_${num}/visualizar_${num}.html`;
-      html += `
-        <div class="card" data-num="${num}">
-          <div class="card-body text-center">
-            <h5 class="card-title">Cliente ${num}</h5>
-            <a href="${path}" target="_blank" class="btn btn-custom">Abrir resultado</a>
+      const repoUrl = "https://api.github.com/repos/adanflute-dev/provador-virtual-resultados/contents/";
+
+      const response = await fetch(repoUrl);
+      const data = await response.json();
+
+      const pastas = data.filter(item => item.type === "dir" && item.name.startsWith("cliente_"));
+
+      grid.innerHTML = pastas.map(pasta => {
+        const num = pasta.name.replace("cliente_", "");
+        return `
+          <div class="card" data-num="${num}">
+            <div class="card-body text-center">
+              <h5 class="card-title">Cliente ${num}</h5>
+              <a href="${pasta.name}/visualizar_${num}.html" target="_blank" class="btn btn-custom">Abrir resultado</a>
+            </div>
           </div>
-        </div>
-      `;
-    });
+        `;
+      }).join("");
 
-    grid.innerHTML = html;
+      const cards = document.querySelectorAll('.card');
 
-    // 🔎 Função de busca
-    const searchInput = document.getElementById('search');
-    const cards = document.querySelectorAll('.card');
-    const noResults = document.getElementById('noResults');
+      document.getElementById('search').addEventListener('input', () => {
+        const term = document.getElementById('search').value.trim().toLowerCase();
+        let encontrou = false;
 
-    searchInput.addEventListener('input', () => {
-      const term = searchInput.value.trim().toLowerCase();
-      let anyVisible = false;
+        cards.forEach(card => {
+          const num = card.getAttribute('data-num');
+          if (num.includes(term) && term !== "") {
+            card.classList.add("show");
+            encontrou = true;
+          } else {
+            card.classList.remove("show");
+          }
+        });
 
-      cards.forEach(card => {
-        const num = card.getAttribute('data-num');
-        if (num.includes(term) && term !== '') {
-          card.classList.add('show');
-          anyVisible = true;
-        } else {
-          card.classList.remove('show');
-        }
+        noResults.style.display = (term !== "" && !encontrou) ? 'block' : 'none';
       });
+    }
 
-      noResults.style.display = (term !== '' && !anyVisible) ? 'block' : 'none';
-    });
+    carregarClientes();
   </script>
+
 </body>
 </html>
