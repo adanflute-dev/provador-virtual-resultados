@@ -2,152 +2,94 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<title>Cliente 196 | Provador Virtual IA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Provador Virtual IA — Cliente 196</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root {
-    --primary: #2563eb;
-    --bg: #f4f6f8;
-    --card: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --radius: 14px;
-    --shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-* {
-    box-sizing: border-box;
-}
-
 body {
     margin: 0;
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f3f4f6;
 }
 
 header {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: white;
-    padding: 32px 20px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px 40px;
 }
 
 .header-content {
-    max-width: 1200px;
-    margin: auto;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .header-text h1 {
-    margin: 0 0 10px 0;
-    font-size: 2rem;
+    margin: 0;
+    font-size: 32px;
 }
 
 .header-text p {
-    margin: 0;
-    font-size: 1rem;
-    opacity: 0.9;
-}
-
-.header-text small {
-    display: block;
-    margin-top: 8px;
-    word-break: break-all;
-    opacity: 0.85;
+    margin: 5px 0 0;
+    color: #555;
 }
 
 .qr-card {
-    background: white;
-    padding: 16px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
     text-align: center;
-    min-width: 180px;
+    background: #f9fafb;
+    padding: 10px;
+    border-radius: 12px;
 }
 
 .qr-card img {
-    width: 140px;
-    height: auto;
+    width: 120px;
 }
 
 .qr-card span {
     display: block;
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: var(--muted);
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
 }
 
 main {
-    max-width: 1200px;
-    margin: auto;
-    padding: 40px 20px;
+    padding: 40px;
 }
 
 .galeria {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
 }
 
 .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    cursor: pointer;
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
 }
 
 .card img {
     width: 100%;
-    display: block;
+    border-radius: 15px;
 }
 
-.card-footer {
-    padding: 12px;
+.card p {
     text-align: center;
-    font-size: 0.9rem;
-    color: var(--muted);
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
 }
 
 footer {
     text-align: center;
-    padding: 30px 10px;
-    color: var(--muted);
-    font-size: 0.85rem;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: var(--radius);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-}
-
-.modal.active {
-    display: flex;
+    padding: 30px;
+    color: #777;
 }
 </style>
 </head>
@@ -157,13 +99,12 @@ footer {
     <div class="header-content">
         <div class="header-text">
             <h1>Cliente 196</h1>
-            <p>Acesse sua galeria pelo celular</p>
-            <small>https://adanflute-dev.github.io/provador-virtual-resultados/cliente_196/visualizar_196.html</small>
+            <p>Escaneie o QR Code para acessar sua galeria no celular</p>
         </div>
 
         <div class="qr-card">
-            <img src="qrcode_196.png" alt="QR Code para galeria">
-            <span>Escaneie para abrir no celular</span>
+            <img src="qrcode_196.png" alt="QR Code da galeria">
+            <span>Abra no celular</span>
         </div>
     </div>
 </header>
@@ -171,46 +112,32 @@ footer {
 <main>
     <div class="galeria">
 
-        <div class="card" onclick="openModal('roupa1.jpg')">
-            <img src="roupa1.jpg" alt="roupa1.jpg">
-            <div class="card-footer">roupa1.jpg</div>
+        <div class="card">
+            <img src="roupa1.jpg">
+            <p>roupa1.jpg</p>
         </div>
         
-        <div class="card" onclick="openModal('roupa2.jpg')">
-            <img src="roupa2.jpg" alt="roupa2.jpg">
-            <div class="card-footer">roupa2.jpg</div>
+        <div class="card">
+            <img src="roupa2.jpg">
+            <p>roupa2.jpg</p>
         </div>
         
-        <div class="card" onclick="openModal('roupa3.jpg')">
-            <img src="roupa3.jpg" alt="roupa3.jpg">
-            <div class="card-footer">roupa3.jpg</div>
+        <div class="card">
+            <img src="roupa3.jpg">
+            <p>roupa3.jpg</p>
         </div>
         
-        <div class="card" onclick="openModal('roupa4.jpg')">
-            <img src="roupa4.jpg" alt="roupa4.jpg">
-            <div class="card-footer">roupa4.jpg</div>
+        <div class="card">
+            <img src="roupa4.jpg">
+            <p>roupa4.jpg</p>
         </div>
         
     </div>
 </main>
 
 <footer>
-    <p>Provador Virtual IA • Experiência Digital Profissional</p>
+    Provador Virtual IA • Sistema Automático com GitHub Pages
 </footer>
-
-<div class="modal" id="modal" onclick="closeModal()">
-    <img id="modalImg">
-</div>
-
-<script>
-function openModal(src) {
-    document.getElementById("modalImg").src = src;
-    document.getElementById("modal").classList.add("active");
-}
-function closeModal() {
-    document.getElementById("modal").classList.remove("active");
-}
-</script>
 
 </body>
 </html>
